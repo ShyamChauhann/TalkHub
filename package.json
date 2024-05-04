@@ -1,0 +1,38 @@
+{
+  "name": "communication",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon backend/server.js"
+  },
+  "author": "Shyam & Dhyey",
+  "license": "ISC",
+  "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "axios": "^1.6.2",
+    "backend": "^0.0.0",
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.41.1",
+    "colors": "^1.4.0",
+    "concurrently": "^8.2.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
+    "framer-motion": "^10.16.16",
+    "http-proxy-middleware": "^2.0.6",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.3",
+    "nodemon": "^3.0.2",
+    "react-router-dom": "^5.3.4",
+    "react-scripts": "^5.0.1",
+    "socket.io": "^4.7.4"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.23.3"
+  }
+}
