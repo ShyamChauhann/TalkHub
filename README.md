@@ -1,122 +1,108 @@
 # 💬 TalkHub — Real-Time Chat & Collaboration Platform
 
-TalkHub is a full-stack real-time communication and collaboration platform that enables users to register, authenticate, communicate, and exchange messages through a modern web application.
+TalkHub is a full-stack real-time chat and collaboration platform that enables users to securely register, authenticate, communicate, and exchange messages through a modern web application.
 
-The project is built using **React.js, Node.js, Express.js, MongoDB, JWT, and real-time communication technologies**.
+The project demonstrates the integration of a React frontend, Node.js/Express backend, MongoDB database, JWT-based authentication, and real-time communication.
 
 ---
 
 ## 📌 Table of Contents
 
-* [Project Overview](#-project-overview)
+* [Overview](#-overview)
 * [Features](#-features)
 * [Technology Stack](#-technology-stack)
-* [System Architecture](#-system-architecture)
+* [Architecture](#-architecture)
 * [Project Structure](#-project-structure)
 * [Application Flow](#-application-flow)
 * [Authentication Flow](#-authentication-flow)
-* [Chat Flow](#-chat-flow)
-* [Database Design](#-database-design)
+* [Messaging Flow](#-messaging-flow)
+* [Database](#-database)
 * [Prerequisites](#-prerequisites)
 * [Installation](#-installation)
-* [Environment Variables](#-environment-variables)
+* [Environment Configuration](#-environment-configuration)
 * [Running the Project](#-running-the-project)
-* [API Endpoints](#-api-endpoints)
-* [Frontend Structure](#-frontend-structure)
-* [Backend Structure](#-backend-structure)
+* [API Overview](#-api-overview)
+* [Backend Architecture](#-backend-architecture)
+* [Frontend Architecture](#-frontend-architecture)
 * [Real-Time Communication](#-real-time-communication)
 * [Security](#-security)
-* [Error Handling](#-error-handling)
+* [Testing](#-testing)
 * [Troubleshooting](#-troubleshooting)
-* [Development Workflow](#-development-workflow)
 * [Future Improvements](#-future-improvements)
 * [Learning Outcomes](#-learning-outcomes)
 * [Author](#-author)
 
 ---
 
-# 🚀 Project Overview
+# 🚀 Overview
 
-TalkHub is designed as a real-time communication platform where users can create accounts, securely log in, find other users, and exchange messages.
+TalkHub is a full-stack communication platform designed to provide real-time interaction between users.
 
 The application follows a client-server architecture:
 
 ```text
-                    ┌─────────────────────┐
-                    │   React Frontend    │
-                    │      Client         │
-                    └──────────┬──────────┘
-                               │
-                         HTTP / REST API
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │ Node.js + Express   │
-                    │      Backend        │
-                    └──────────┬──────────┘
-                               │
-                ┌──────────────┴──────────────┐
-                │                             │
-                ▼                             ▼
-       ┌────────────────┐          ┌──────────────────┐
-       │  MongoDB Atlas │          │ Socket.IO /      │
-       │    Database    │          │ Real-Time Layer  │
-       └────────────────┘          └──────────────────┘
+┌──────────────────────┐
+│   React Frontend     │
+│      Client          │
+└──────────┬───────────┘
+           │
+           │ HTTP / Real-Time Connection
+           ▼
+┌──────────────────────┐
+│ Node.js + Express    │
+│      Backend         │
+└──────────┬───────────┘
+           │
+      ┌────┴─────┐
+      │          │
+      ▼          ▼
+┌──────────┐  ┌──────────────┐
+│ MongoDB  │  │ Real-Time    │
+│ Database │  │ Communication│
+└──────────┘  └──────────────┘
 ```
 
 ---
 
 # ✨ Features
 
-## 👤 User Management
+## 👤 User Authentication
 
 * User registration
 * User login
-* User authentication
 * JWT-based authentication
-* Password protection
-* User profile information
-* Fetch available users
+* Password hashing
+* Protected API routes
+* User session/authentication management
 
 ## 💬 Messaging
 
-* Send messages
-* Receive messages
-* Store messages in MongoDB
+* Send messages between users
 * Retrieve previous messages
+* Store messages in MongoDB
 * User-to-user communication
-* Real-time communication
+* Real-time message delivery
 
 ## ⚡ Real-Time Communication
 
-The platform supports real-time communication using a socket-based architecture.
+The application supports real-time communication so that users can exchange messages without continuously refreshing the page.
 
-When a message is sent:
+## 🗄️ Database
 
-```text
-User A
-   ↓
-Frontend
-   ↓
-Backend
-   ↓
-MongoDB
-   ↓
-Real-Time Event
-   ↓
-User B
-```
+MongoDB is used to store application data such as:
 
-This allows messages to appear without continuously refreshing the page.
+* User information
+* Authentication-related data
+* Messages
+* Conversation-related information
 
 ## 🔐 Security
 
-* JWT authentication
 * Password hashing
-* Environment variables for secrets
+* JWT authentication
 * Protected backend routes
-* Authentication middleware
-* Database credentials kept outside source code
+* Environment variables for sensitive configuration
+* Database credentials kept outside the source code
 
 ---
 
@@ -124,146 +110,132 @@ This allows messages to appear without continuously refreshing the page.
 
 ## Frontend
 
-| Technology        | Purpose                 |
-| ----------------- | ----------------------- |
-| React.js          | User interface          |
-| JavaScript        | Application logic       |
-| HTML5             | Structure               |
-| CSS3              | Styling                 |
-| Fetch API / Axios | API communication       |
-| Socket.IO Client  | Real-time communication |
+* React.js
+* JavaScript
+* HTML5
+* CSS3
+* Fetch API / HTTP client
+* Real-time communication client
 
 ## Backend
 
-| Technology | Purpose                 |
-| ---------- | ----------------------- |
-| Node.js    | JavaScript runtime      |
-| Express.js | Backend framework       |
-| MongoDB    | Database                |
-| Mongoose   | MongoDB ODM             |
-| JWT        | Authentication          |
-| bcrypt     | Password hashing        |
-| Socket.IO  | Real-time communication |
-| Nodemon    | Development server      |
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+* JSON Web Token (JWT)
+* bcrypt
+* Nodemon
+
+## Development Tools
+
+* Git
+* GitHub
+* VS Code
+* npm
 
 ---
 
-# 🏗 System Architecture
+# 🏗 Architecture
 
-TalkHub follows a layered full-stack architecture.
+TalkHub follows a layered full-stack architecture:
 
 ```text
-┌─────────────────────────────────────────────┐
-│                  FRONTEND                   │
-│                                             │
-│ React Components                            │
-│       ↓                                     │
-│ Pages / UI                                  │
-│       ↓                                     │
-│ API Calls                                   │
-│       ↓                                     │
-│ Socket.IO Client                            │
-└──────────────────────┬──────────────────────┘
-                       │
-                       │ HTTP / WebSocket
-                       ▼
-┌─────────────────────────────────────────────┐
-│                  BACKEND                    │
-│                                             │
-│ Express Server                              │
-│       ↓                                     │
-│ Routes                                      │
-│       ↓                                     │
-│ Middleware                                  │
-│       ↓                                     │
-│ Controllers / Business Logic                │
-│       ↓                                     │
-│ Models                                      │
-└──────────────────────┬──────────────────────┘
-                       │
-                       ▼
-              ┌─────────────────┐
-              │     MongoDB      │
-              │                 │
-              │ Users           │
-              │ Messages        │
-              │ Other Data      │
-              └─────────────────┘
+                    ┌───────────────┐
+                    │     User      │
+                    └───────┬───────┘
+                            │
+                            ▼
+                    ┌───────────────┐
+                    │ React Client  │
+                    └───────┬───────┘
+                            │
+                       HTTP / Socket
+                            │
+                            ▼
+                    ┌───────────────┐
+                    │    Express    │
+                    │    Server     │
+                    └───────┬───────┘
+                            │
+                ┌───────────┴───────────┐
+                │                       │
+                ▼                       ▼
+        ┌───────────────┐       ┌───────────────┐
+        │ Authentication│       │ Message Logic │
+        └───────┬───────┘       └───────┬───────┘
+                │                       │
+                └───────────┬───────────┘
+                            ▼
+                    ┌───────────────┐
+                    │    MongoDB    │
+                    └───────────────┘
 ```
 
 ---
 
 # 📁 Project Structure
 
-A typical TalkHub structure is:
+The project is organized into frontend and backend components.
 
 ```text
 TalkHub/
 │
 ├── backend/
-│   │
 │   ├── controllers/
-│   │
 │   ├── middleware/
-│   │
 │   ├── models/
-│   │
 │   ├── routes/
-│   │
 │   ├── server.js
-│   │
 │   └── ...
 │
 ├── frontend/
-│   │
 │   ├── public/
-│   │
 │   ├── src/
 │   │   ├── components/
 │   │   ├── pages/
 │   │   ├── services/
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   │
-│   ├── package.json
+│   │   └── ...
 │   └── ...
 │
 ├── .env
+├── .gitignore
 ├── package.json
 ├── package-lock.json
 └── README.md
 ```
 
-> The exact folder names can vary depending on the existing implementation.
+> `.env` is used for local configuration and should not be committed to the repository.
 
 ---
 
 # 🔄 Application Flow
 
-## 1. User Registration
+The general application flow is:
 
 ```text
 User
- ↓
-Registration Form
- ↓
+  │
+  ▼
 React Frontend
- ↓
-POST /api/auth/register
- ↓
+  │
+  ▼
+API Request
+  │
+  ▼
 Express Backend
- ↓
-Validate Input
- ↓
-Hash Password
- ↓
+  │
+  ▼
+Authentication / Business Logic
+  │
+  ▼
 MongoDB
- ↓
-User Created
- ↓
+  │
+  ▼
 Response
- ↓
-Frontend
+  │
+  ▼
+React Frontend
 ```
 
 ---
@@ -275,38 +247,26 @@ TalkHub uses JWT-based authentication.
 ## Registration
 
 ```text
-User enters:
-
-Name
-Email
-Password
-
-       ↓
-
-React
-       ↓
-POST /register
-       ↓
-Express
-       ↓
-bcrypt password hashing
-       ↓
+User
+ ↓
+Registration Form
+ ↓
+React Frontend
+ ↓
+Backend API
+ ↓
+Validate User Data
+ ↓
+Hash Password
+ ↓
+Store User
+ ↓
 MongoDB
 ```
 
-The password should never be stored as plain text.
+Passwords are not stored as plain text.
 
-Instead:
-
-```text
-Password
-   ↓
-bcrypt
-   ↓
-Hashed Password
-   ↓
-MongoDB
-```
+The password is processed using a hashing mechanism before being stored.
 
 ---
 
@@ -317,183 +277,123 @@ User
  ↓
 Login Form
  ↓
-React
+React Frontend
  ↓
-POST /login
- ↓
-Express
+Login API
  ↓
 Find User
  ↓
-Compare Password
+Verify Password
  ↓
-Generate JWT
+Generate Authentication Token
  ↓
 Return Authentication Response
  ↓
 Frontend
 ```
 
-The JWT is then used to authenticate protected requests.
+Protected requests can then use the authentication mechanism to verify the user.
 
 ---
 
-# 🎫 JWT Authentication
+# 💬 Messaging Flow
 
-JWT stands for:
-
-**JSON Web Token**
-
-A simplified token structure is:
-
-```text
-Header.Payload.Signature
-```
-
-The backend creates the token using a secret:
-
-```javascript
-jwt.sign(
-    { userId: user._id },
-    process.env.JWT_SECRET
-);
-```
-
-The secret should be stored inside `.env`.
-
-Example:
-
-```env
-JWT_SECRET=your_secret_key
-```
-
-Never commit this secret to GitHub.
-
----
-
-# 💬 Chat Flow
-
-When User A sends a message to User B:
+When a user sends a message:
 
 ```text
 User A
-   │
-   ▼
+  │
+  ▼
 React Chat Interface
-   │
-   ▼
-POST Message / Socket Event
-   │
-   ▼
-Express Backend
-   │
-   ├───────────────► MongoDB
-   │                    │
-   │                    ▼
-   │               Message Stored
-   │
-   ▼
+  │
+  ▼
+Backend API / Real-Time Connection
+  │
+  ▼
+Message Processing
+  │
+  ├──────────────► MongoDB
+  │                    │
+  │                    ▼
+  │               Message Stored
+  │
+  ▼
 Real-Time Event
-   │
-   ▼
-Socket.IO
-   │
-   ▼
+  │
+  ▼
 User B
-   │
-   ▼
+  │
+  ▼
 React Chat Interface
 ```
 
+This allows messages to be both persisted and delivered to users through the application's communication layer.
+
 ---
 
-# 🗄 Database Design
+# 🗄 Database
 
-TalkHub uses MongoDB.
+TalkHub uses **MongoDB** as its database.
 
-MongoDB stores information in collections instead of traditional relational tables.
+MongoDB stores data using collections and documents.
 
 Possible collections include:
 
 ```text
 Database
 │
-├── users
+├── Users
 │
-└── messages
+└── Messages
 ```
 
-## Users Collection
+## User Data
 
-A user document may contain:
+A user document can contain information such as:
 
-```json
-{
-    "_id": "ObjectId",
-    "name": "John",
-    "email": "john@example.com",
-    "password": "hashed_password"
-}
+```text
+User
+├── Name
+├── Email
+├── Password Hash
+└── Other User Information
 ```
 
-## Messages Collection
+## Message Data
 
-A message document may contain:
+A message can contain information such as:
 
-```json
-{
-    "_id": "ObjectId",
-    "sender": "ObjectId",
-    "receiver": "ObjectId",
-    "message": "Hello!",
-    "createdAt": "2026-09-28T10:00:00Z"
-}
+```text
+Message
+├── Sender
+├── Receiver
+├── Message Content
+└── Timestamp
 ```
 
 The exact fields depend on the implementation.
 
 ---
 
-# ☁️ MongoDB Atlas
+# 📋 Prerequisites
 
-The project can use MongoDB Atlas as the cloud database.
-
-A MongoDB connection string generally looks like:
-
-```text
-mongodb+srv://USERNAME:PASSWORD@CLUSTER.mongodb.net/DATABASE
-```
-
-Example:
-
-```env
-MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/talkhub
-```
-
-The actual connection string should never be committed to GitHub.
-
----
-
-# ⚙️ Prerequisites
-
-Before running TalkHub, install:
+Before running the project, make sure the following are installed:
 
 * Node.js
 * npm
-* MongoDB Atlas account
+* MongoDB / MongoDB Atlas
 * Git
 * Modern web browser
 
-Recommended Node.js version:
+The project is currently developed and tested with a modern Node.js LTS version.
 
-```text
-Node.js 20 LTS
-```
-
-Check your versions:
+Check your installation:
 
 ```bash
 node -v
+```
+
+```bash
 npm -v
 ```
 
@@ -504,7 +404,7 @@ npm -v
 ## 1. Clone the Repository
 
 ```bash
-git clone <YOUR_REPOSITORY_URL>
+git clone <repository-url>
 ```
 
 Move into the project:
@@ -515,78 +415,66 @@ cd TalkHub
 
 ---
 
-# 📦 Install Backend Dependencies
+## 2. Install Dependencies
 
-From the project root:
+Install backend/project dependencies:
 
 ```bash
 npm install
 ```
 
-If the backend has a separate `package.json`, enter the backend directory first:
+If the frontend contains its own `package.json`, install its dependencies as well:
 
 ```bash
-cd backend
+cd frontend
 npm install
 ```
 
 ---
 
-# 🔑 Environment Variables
+# 🔑 Environment Configuration
 
-Create a `.env` file according to the environment variables expected by the existing backend.
+TalkHub uses environment variables for configuration and sensitive information.
 
-Example:
+Create a local `.env` file according to the variables required by the backend.
+
+Example structure:
 
 ```env
 PORT=5000
-
-MONGO_URI=mongodb+srv://USERNAME:PASSWORD@CLUSTER.mongodb.net/talkhub
-
-JWT_SECRET=your_jwt_secret
-
-NODE_ENV=development
+MONGO_URI=<your-mongodb-connection-string>
+JWT_SECRET=<your-secret>
 ```
 
-The exact variable names should match the code in the project.
+### Important
 
-For example, if the code contains:
+Do **not** put real credentials in the README.
 
-```javascript
-process.env.MONGO_URI
-```
+Do **not** commit `.env` to GitHub.
 
-then the `.env` file must contain:
-
-```env
-MONGO_URI=...
-```
-
----
-
-# 🔒 Generate a JWT Secret
-
-A secure random secret can be generated using:
-
-```bash
-openssl rand -hex 32
-```
-
-Example output:
+The repository should contain:
 
 ```text
-a8f2c7d9...
+.env
 ```
 
-Then:
+inside `.gitignore`.
+
+A safe `.env.example` can be provided for other developers:
 
 ```env
-JWT_SECRET=a8f2c7d9...
+PORT=5000
+MONGO_URI=
+JWT_SECRET=
 ```
+
+This file contains placeholders only.
 
 ---
 
-# ▶️ Running the Backend
+# ▶️ Running the Project
+
+## Start Backend
 
 From the project root:
 
@@ -594,669 +482,475 @@ From the project root:
 npm start
 ```
 
-The existing project uses Nodemon during development.
+The backend starts the Node.js/Express server.
 
-Typical command:
-
-```text
-nodemon backend/server.js
-```
-
-A successful backend startup should indicate that:
-
-```text
-Server is running
-MongoDB connected
-```
-
-The exact messages depend on the implementation.
+During development, Nodemon can automatically restart the server when source files change.
 
 ---
 
-# ▶️ Running the Frontend
+## Start Frontend
 
-Open another terminal.
-
-Navigate to the frontend:
+Open another terminal and navigate to the frontend directory:
 
 ```bash
-cd TalkHub/frontend
+cd frontend
 ```
 
-Install dependencies:
+Install dependencies if required:
 
 ```bash
 npm install
 ```
 
-Then run the command specified by the frontend's `package.json`.
+Then run the frontend using the script defined in its `package.json`.
 
-For example, if the project uses Vite:
+For example, a Vite-based frontend can use:
 
 ```bash
 npm run dev
 ```
 
-If it uses Create React App:
-
-```bash
-npm start
-```
-
-Check `frontend/package.json` to determine the correct command.
+The exact command depends on the frontend configuration.
 
 ---
 
 # 🌐 Local Development
 
-A typical development setup may look like:
+During development, the application consists of:
 
 ```text
-Frontend
-http://localhost:5173
-
-        ↓
-
-Backend
-http://localhost:5000
-
-        ↓
-
-MongoDB Atlas
+┌─────────────────────┐
+│ React Frontend      │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│ Express Backend     │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│ MongoDB             │
+└─────────────────────┘
 ```
 
-The actual frontend/backend ports depend on the project configuration.
+The frontend and backend ports are determined by the project's configuration.
 
 ---
 
-# 🔌 API Endpoints
+# 🔌 API Overview
 
-The exact routes depend on the current implementation.
+TalkHub uses REST APIs for communication between the frontend and backend.
 
-Typical authentication endpoints:
+Typical operations include:
 
-## Register
+| Method    | Purpose                         |
+| --------- | ------------------------------- |
+| POST      | Create/register/login/send data |
+| GET       | Retrieve data                   |
+| PUT/PATCH | Update data                     |
+| DELETE    | Delete data                     |
 
-```http
-POST /api/auth/register
-```
-
-Example request:
-
-```json
-{
-    "name": "John",
-    "email": "john@example.com",
-    "password": "password123"
-}
-```
-
----
-
-## Login
-
-```http
-POST /api/auth/login
-```
-
-Example:
-
-```json
-{
-    "email": "john@example.com",
-    "password": "password123"
-}
-```
-
----
-
-## Get Users
-
-```http
-GET /api/users
-```
-
-Returns registered users according to the backend implementation.
-
----
-
-## Get Messages
-
-```http
-GET /api/messages
-```
-
-Possible response:
-
-```json
-[
-    {
-        "_id": "123",
-        "sender": "user1",
-        "receiver": "user2",
-        "message": "Hello"
-    }
-]
-```
-
----
-
-## Send Message
-
-```http
-POST /api/messages
-```
-
-Example:
-
-```json
-{
-    "sender": "USER_ID",
-    "receiver": "USER_ID",
-    "message": "Hello!"
-}
-```
-
-> Use the routes actually defined in `backend/routes` as the authoritative API list for this project.
-
----
-
-# 🔄 GET vs POST
-
-TalkHub uses different HTTP methods depending on the operation.
-
-## GET
-
-Used to retrieve information.
-
-Example:
-
-```http
-GET /api/messages
-```
-
-Meaning:
+Examples of application operations include:
 
 ```text
-Client → Server
-"Give me the messages."
+POST    Authentication / Registration
+POST    Authentication / Login
+GET     Users
+GET     Messages
+POST    Messages
 ```
+
+The exact API routes are defined in the backend route files.
 
 ---
 
-## POST
+# 📡 HTTP Request Example
 
-Used to send/create information.
-
-Example:
-
-```http
-POST /api/messages
-```
-
-Meaning:
+When the frontend requests user information:
 
 ```text
-Client → Server
-"Create this new message."
+React
+  │
+  │ GET request
+  ▼
+Express API
+  │
+  ▼
+Controller
+  │
+  ▼
+MongoDB
+  │
+  ▼
+Response
+  │
+  ▼
+React
+```
+
+For creating a message:
+
+```text
+React
+  │
+  │ POST request
+  ▼
+Express API
+  │
+  ▼
+Message Controller
+  │
+  ▼
+MongoDB
+  │
+  ▼
+Response
 ```
 
 ---
 
-# 🧩 Backend Components
+# 🧩 Backend Architecture
+
+The backend follows a modular architecture.
 
 ## Routes
 
-Routes define API endpoints.
+Routes define the application's API endpoints.
 
-Example:
-
-```javascript
-router.get("/messages", getMessages);
-
-router.post("/messages", sendMessage);
-```
-
----
-
-## Controllers
-
-Controllers contain application logic.
-
-Example:
-
-```javascript
-const getMessages = async (req, res) => {
-    // Fetch messages
-};
-```
-
----
-
-## Models
-
-Models define the MongoDB document structure.
-
-Example:
-
-```javascript
-const messageSchema = new mongoose.Schema({
-    sender: String,
-    receiver: String,
-    message: String
-});
+```text
+Request
+   ↓
+Route
+   ↓
+Middleware
+   ↓
+Controller
 ```
 
 ---
 
 ## Middleware
 
-Middleware runs between the incoming request and the final route handler.
+Middleware performs processing before the request reaches the controller.
+
+Examples include:
+
+* Authentication
+* Token verification
+* Request validation
+* Error handling
+
+Flow:
 
 ```text
 Request
-   ↓
+  ↓
 Middleware
-   ↓
+  ↓
 Controller
-   ↓
+  ↓
 Response
 ```
 
-Authentication middleware can verify JWT tokens before allowing access to protected routes.
+---
+
+## Controllers
+
+Controllers contain the application's business logic.
+
+For example:
+
+```text
+User Controller
+    ↓
+User operations
+
+Message Controller
+    ↓
+Message operations
+
+Authentication Controller
+    ↓
+Registration / Login
+```
+
+---
+
+## Models
+
+Mongoose models define how application data is represented in MongoDB.
+
+```text
+Model
+  ↓
+Schema
+  ↓
+MongoDB Collection
+```
 
 ---
 
 # ⚡ Real-Time Communication
 
-For real-time chat, a socket-based connection can be maintained between the client and server.
+Real-time communication allows connected users to receive updates without repeatedly refreshing the page.
 
-Traditional HTTP:
+Traditional API communication:
 
 ```text
-Client → Request
-Server → Response
+Client → Request → Server
+Client ← Response ← Server
 ```
 
 Real-time communication:
 
 ```text
-Client ←────────→ Server
+Client ←──────────────→ Server
        Persistent
        Connection
 ```
 
-This allows the server to notify connected clients when new events occur.
+This architecture is useful for chat applications because messages can be delivered immediately to connected users.
+
+---
+
+# 🔐 Security
+
+TalkHub follows several security practices.
+
+### Password Security
+
+Passwords should be hashed before being stored.
+
+```text
+Plain Password
+      ↓
+Password Hashing
+      ↓
+Password Hash
+      ↓
+Database
+```
+
+### JWT Security
+
+Authentication secrets are stored using environment variables.
+
+### Environment Variables
+
+Sensitive configuration should remain outside the source code.
+
+Examples:
+
+```text
+Database credentials
+Authentication secrets
+API keys
+Private configuration
+```
+
+### Git Protection
+
+The `.gitignore` file should include:
+
+```gitignore
+node_modules
+.env
+```
+
+This prevents local dependencies and environment credentials from being committed.
 
 ---
 
 # 🧪 Testing the Application
 
-After starting both frontend and backend:
+After starting the backend and frontend, test the application in the following order.
 
-### Test 1 — Registration
+## 1. Registration
 
-Create a new account.
+Create a new user account.
 
-Verify:
+Verify that registration succeeds.
 
-```text
-User created
-     ↓
-MongoDB users collection
-```
+---
 
-### Test 2 — Login
+## 2. Login
 
-Enter valid credentials.
+Use the newly created account.
 
-Verify:
+Verify that authentication succeeds.
 
-```text
-Login successful
-     ↓
-Authentication token/session
-```
+---
 
-### Test 3 — Users
+## 3. User List
 
-Open the user list.
+Verify that users can be retrieved from the backend.
 
-Verify:
+---
 
-```text
-Frontend
-   ↓
-GET /api/users
-   ↓
-Backend
-   ↓
-MongoDB
-```
+## 4. Messaging
 
-### Test 4 — Send Message
+Select another user and send a message.
 
-Select another user and send:
+Verify that the message appears in the conversation.
 
-```text
-Hello!
-```
+---
 
-Verify:
+## 5. Message Persistence
 
-```text
-Message appears in chat
-```
+Refresh the application.
 
-### Test 5 — Persistence
+Verify that previously stored messages can be retrieved from the database.
 
-Refresh the browser.
+---
 
-The previous messages should be retrieved from MongoDB if persistence is implemented.
-
-### Test 6 — Real-Time Messaging
+## 6. Real-Time Communication
 
 Open the application in two browser windows.
 
 ```text
-Browser A → User A
-Browser B → User B
+Browser A
+   │
+ User A
+   │
+   └────── Message ──────►
+                           │
+                           ▼
+                       Browser B
+                         User B
 ```
 
-Send a message from A to B and verify that B receives it through the real-time mechanism.
-
----
-
-# 🛡 Security
-
-The application should follow these security practices:
-
-### Passwords
-
-Never store:
-
-```text
-password123
-```
-
-directly in MongoDB.
-
-Instead:
-
-```text
-password123
-     ↓
-bcrypt
-     ↓
-hashed password
-```
-
-### JWT Secret
-
-Never expose:
-
-```env
-JWT_SECRET=...
-```
-
-to the frontend.
-
-### MongoDB Credentials
-
-Never commit:
-
-```env
-MONGO_URI=...
-```
-
-to a public repository.
-
-### `.gitignore`
-
-The project should contain:
-
-```gitignore
-node_modules/
-.env
-.DS_Store
-```
+Verify that messages are delivered through the real-time communication layer.
 
 ---
 
 # 🐛 Troubleshooting
 
-## MongoDB Authentication Failed
-
-Error:
-
-```text
-Error: bad auth : Authentication failed.
-```
-
-Check:
-
-1. MongoDB username
-2. MongoDB password
-3. MongoDB Atlas database user
-4. MongoDB connection string
-5. Special characters in password
-
-Example:
-
-```text
-@ → %40
-# → %23
-```
-
----
-
-## MongoDB Connection Warning
-
-You may see:
-
-```text
-useNewUrlParser is a deprecated option
-```
-
-or:
-
-```text
-useUnifiedTopology is a deprecated option
-```
-
-These are MongoDB driver deprecation warnings.
-
-They are not authentication errors.
-
-With modern MongoDB drivers, these options are no longer necessary.
-
----
-
-# ❌ Port Already in Use
+## MongoDB Authentication Error
 
 If you see:
 
 ```text
-EADDRINUSE
+Authentication failed
 ```
 
-another process is already using the port.
+check the MongoDB database credentials and local environment configuration.
 
-Check:
-
-```bash
-lsof -i :5000
-```
-
-Then terminate the process if appropriate:
-
-```bash
-kill <PID>
-```
+Do not put the credentials directly into source files.
 
 ---
 
-# ❌ npm Script Not Found
+## Missing Dependencies
 
 If you see:
 
 ```text
-npm error Missing script: "dev"
+Cannot find module
 ```
 
-check:
-
-```bash
-cat package.json
-```
-
-Look at:
-
-```json
-"scripts": {
-    ...
-}
-```
-
-Run one of the scripts that actually exists.
-
-For example:
-
-```bash
-npm start
-```
-
-or:
-
-```bash
-npm run dev
-```
-
----
-
-# ❌ Module Not Found
-
-Example:
-
-```text
-Cannot find module 'express'
-```
-
-Run:
+run:
 
 ```bash
 npm install
 ```
 
-If dependencies are corrupted:
+If necessary:
 
 ```bash
 rm -rf node_modules
 npm install
 ```
 
-Do not delete `package-lock.json` unless there is a specific reason.
+---
+
+## Port Already in Use
+
+If the backend port is already occupied, check the process using it:
+
+```bash
+lsof -i :5000
+```
+
+Stop the process if necessary.
+
+---
+
+## npm Script Not Found
+
+If you see:
+
+```text
+npm error Missing script
+```
+
+check the available scripts:
+
+```bash
+npm run
+```
+
+or inspect:
+
+```text
+package.json
+```
+
+Use the script defined by the project.
 
 ---
 
 # 🔄 Development Workflow
 
-A typical development workflow is:
+The general development workflow is:
 
 ```text
-1. Start MongoDB Atlas
-        ↓
+1. Start MongoDB
+       ↓
 2. Start Backend
-        ↓
+       ↓
 3. Backend connects to MongoDB
-        ↓
+       ↓
 4. Start Frontend
-        ↓
-5. Open browser
-        ↓
-6. Register/Login
-        ↓
-7. Select user
-        ↓
-8. Send message
-        ↓
-9. Backend stores message
-        ↓
-10. Real-time event delivered
-        ↓
-11. Receiver sees message
+       ↓
+5. Open Application
+       ↓
+6. Register / Login
+       ↓
+7. Select User
+       ↓
+8. Send Message
+       ↓
+9. Store Message
+       ↓
+10. Deliver Real-Time Update
 ```
 
 ---
 
-# 🧠 Complete Request Flow
+# 📈 Future Improvements
 
-Suppose User A sends:
+Potential future enhancements include:
 
-```text
-"Hello User B!"
-```
-
-The complete flow is:
-
-```text
-┌──────────────┐
-│   User A     │
-└──────┬───────┘
-       │
-       ▼
-┌──────────────┐
-│ React Client │
-└──────┬───────┘
-       │
-       │ POST /api/messages
-       ▼
-┌──────────────┐
-│   Express    │
-└──────┬───────┘
-       │
-       ▼
-┌──────────────┐
-│ Middleware   │
-│ JWT Verify   │
-└──────┬───────┘
-       │
-       ▼
-┌──────────────┐
-│ Controller   │
-└──────┬───────┘
-       │
-       ▼
-┌──────────────┐
-│   Mongoose   │
-└──────┬───────┘
-       │
-       ▼
-┌──────────────┐
-│   MongoDB    │
-└──────────────┘
-
-       │
-       ▼
-
-┌──────────────┐
-│ Socket Layer │
-└──────┬───────┘
-       │
-       ▼
-┌──────────────┐
-│   User B     │
-│    React     │
-└──────────────┘
-```
+* Read receipts
+* Message delivery status
+* Message reactions
+* Message editing
+* Message deletion
+* File sharing
+* Image sharing
+* Voice messages
+* Video calling
+* Message search
+* User profile customization
+* End-to-end encryption
 
 ---
 
-# 📊 Project Learning Outcomes
+# 🎓 Learning Outcomes
 
 This project provides practical experience with:
 
-* Full-stack application development
+* Full-stack web development
 * React.js
 * Node.js
 * Express.js
@@ -1271,186 +965,91 @@ This project provides practical experience with:
 * Routing
 * Database operations
 * Real-time communication
-* Socket-based architecture
-* Environment variables
-* API debugging
 * Client-server architecture
+* Environment variables
 * Git and GitHub
+* Debugging and deployment concepts
 
 ---
 
-# 🚀 Future Improvements
+# 📌 Key Concepts Demonstrated
 
-Potential improvements include:
+### Client
 
-* Group chat
-* Typing indicators
-* Online/offline status
-* Message read receipts
-* Message delivery status
-* File sharing
-* Image sharing
-* Voice messages
-* Video calling
-* Message reactions
-* Message editing
-* Message deletion
-* Search messages
-* User profile customization
-* Push notifications
-* Email notifications
-* End-to-end encryption
-* Redis for scalable real-time communication
-* Docker deployment
-* CI/CD pipeline
-* Cloud deployment
-* Automated testing
+The React application running in the user's browser.
+
+### Server
+
+The Node.js/Express application responsible for API requests, authentication, business logic, and database operations.
+
+### Database
+
+MongoDB stores persistent application data.
+
+### API
+
+The communication layer between the frontend and backend.
+
+### Authentication
+
+JWT-based authentication is used to identify and protect users.
+
+### Real-Time Communication
+
+A persistent communication mechanism is used to deliver chat updates between connected clients.
 
 ---
 
-# 🐳 Docker Deployment
-
-The project can later be containerized using Docker.
-
-Possible architecture:
+# 📊 Complete Project Flow
 
 ```text
-                 Docker
-                   │
-       ┌───────────┼───────────┐
-       │           │           │
-       ▼           ▼           ▼
-   Frontend     Backend     Database
-    Container   Container    MongoDB
+                         TALKHUB
+                            │
+                            ▼
+                    ┌──────────────┐
+                    │    React     │
+                    │   Frontend   │
+                    └──────┬───────┘
+                           │
+                    HTTP / Real-Time
+                           │
+                           ▼
+                    ┌──────────────┐
+                    │    Express   │
+                    │    Server    │
+                    └──────┬───────┘
+                           │
+              ┌────────────┼────────────┐
+              │            │            │
+              ▼            ▼            ▼
+        Authentication  Messages    Other APIs
+              │            │
+              └──────┬─────┘
+                     │
+                     ▼
+              ┌──────────────┐
+              │   Mongoose   │
+              └──────┬───────┘
+                     │
+                     ▼
+              ┌──────────────┐
+              │    MongoDB   │
+              └──────────────┘
+
+                     │
+                     ▼
+              Real-Time Layer
+                     │
+             ┌───────┴───────┐
+             ▼               ▼
+          User A           User B
 ```
-
-For production deployments, MongoDB Atlas can continue to be used as the managed database.
-
----
-
-# 🌍 Production Architecture
-
-A production deployment could look like:
-
-```text
-                    Internet
-                       │
-                       ▼
-                ┌─────────────┐
-                │   Browser   │
-                └──────┬──────┘
-                       │
-                       ▼
-                ┌─────────────┐
-                │   Frontend  │
-                │   Hosting   │
-                └──────┬──────┘
-                       │
-                 HTTPS / API
-                       │
-                       ▼
-                ┌─────────────┐
-                │   Backend   │
-                │   Server    │
-                └──────┬──────┘
-                       │
-              ┌────────┴────────┐
-              │                 │
-              ▼                 ▼
-       ┌─────────────┐   ┌─────────────┐
-       │  MongoDB    │   │  Socket.IO  │
-       │   Atlas     │   │ Connections │
-       └─────────────┘   └─────────────┘
-```
-
----
-
-# 📌 Important Environment Files
-
-Never commit sensitive environment variables.
-
-Recommended:
-
-```text
-.env
-```
-
-and:
-
-```text
-.env.example
-```
-
-Example `.env.example`:
-
-```env
-PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
-NODE_ENV=development
-```
-
-The `.env.example` file can safely be committed because it contains placeholders rather than real credentials.
-
----
-
-# 👨‍💻 Development Commands
-
-## Install dependencies
-
-```bash
-npm install
-```
-
-## Start backend
-
-```bash
-npm start
-```
-
-## Start frontend
-
-Use the script defined in:
-
-```text
-frontend/package.json
-```
-
-For example:
-
-```bash
-npm run dev
-```
-
-## Check Node version
-
-```bash
-node -v
-```
-
-## Check npm version
-
-```bash
-npm -v
-```
-
-## Check Git status
-
-```bash
-git status
-```
-
----
-
-# 📜 License
-
-This project is developed for educational, portfolio, and software development purposes.
 
 ---
 
 # 👨‍💻 Author
 
-**Shyam Chauhan**
+## Shyam Chauhan
 
 M.Tech in Computer Science & Engineering — Artificial Intelligence
 IIIT Vadodara
@@ -1462,22 +1061,22 @@ Dharmsinh Desai University, Nadiad
 
 # ⭐ Project Summary
 
-**TalkHub** is a full-stack real-time communication platform demonstrating the integration of:
+TalkHub is a full-stack real-time communication platform that demonstrates the integration of:
 
 ```text
 React
-  +
+   +
 Node.js
-  +
+   +
 Express.js
-  +
+   +
 MongoDB
-  +
+   +
 Mongoose
-  +
-JWT
-  +
-Socket-Based Real-Time Communication
+   +
+JWT Authentication
+   +
+Real-Time Communication
 ```
 
-The project demonstrates how a modern full-stack application handles authentication, API communication, database operations, and real-time messaging from frontend to backend and database.
+The project demonstrates how a modern full-stack application handles authentication, API communication, database operations, and real-time messaging.
